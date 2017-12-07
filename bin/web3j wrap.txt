@@ -1,0 +1,1 @@
+web3j solidity generate Documents.bin Documents.abi -o C:\Users\anya\StudioProjects\blockdocks-android\app\src\main\java -p android.anna.blockdocs_v2
