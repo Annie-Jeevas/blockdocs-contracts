@@ -1,7 +1,1 @@
-build
-migrate
-migrations
-node_modules
-*.json
-*.js
 *.placeholder
