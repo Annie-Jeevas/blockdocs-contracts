@@ -1,4 +1,4 @@
-pragma solidity ^0.4.4; 
+pragma solidity ^0.4.15; 
 
 contract Documents {
 
@@ -19,21 +19,14 @@ contract Documents {
 
 
 	}
-	mapping (uint => Document) public documents;
-	mapping (uint => address) public owners; //номер паспорта к адресу
-	uint lastDocid;
-
-	function Documents() public {
-		lastDocid = 0;
-	}
+	Document[] public documents;
+	//mapping (uint => Document) public documents;
+	//mapping (string => address) public owners; //номер паспорта к адресу
+	
 
 	//Transactions
-	function addDocument(string data, string fio) public returns (uint) {
-		
-		documents[lastDocid] = Document(msg.sender, data, fio); //передавать адрес владельца, а не отправителя	
-		lastDocid++;	
-		return lastDocid;
-
+	function addDocument(string data, string fio) public {
+		documents.push(Document(msg.sender, data, fio)); //передавать адрес владельца, а не отправителя	
 	}
 
 	//Functions
@@ -47,12 +40,12 @@ contract Documents {
 	}
 
 	function getDocumentsNumber() public constant returns (uint) {
-		return lastDocid;
+		return documents.length;
 	}
 
 	function getThisAddresDocNumber() constant public returns (uint) {		
 		uint result = 0;
-		for (uint i = 0; i < lastDocid; i++ ){
+		for (uint i = 0; i < documents.length; i++ ){
 			if(documents[i].owner == msg.sender) {
 				result++;
 			}
@@ -60,13 +53,14 @@ contract Documents {
 		return result;
 	}
 
-	function getThisAddresDocById(uint id) constant public returns (uint, 		//id в мапке
+	function getThisAddresDocById(uint id) constant public returns (
+	    uint, 	//id в массиве
 		address, //владелец
 		string, //содержимое
 		string) //фио
 	{		
 		uint j = 0;
-		for (uint i = 0; i < lastDocid; i++ ){
+		for (uint i = 0; i < documents.length; i++ ){
 			if(documents[i].owner == msg.sender) {
 				if (j == id) return (i, documents[i].owner, documents[i].document, documents[i].FIO);
 				else j++;	

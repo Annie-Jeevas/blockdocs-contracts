@@ -9,14 +9,14 @@ contract TestDocuments {
 
 
 	function testAddDocument() {
-    uint returnedId = documents.addDocument("data","FIO");
-    uint expected = 1;
-    Assert.equal(returnedId, expected, "Document with ID = 1 shoul be added.");
+    documents.addDocument("data","FIO");
+    uint returnedId = documents.getDocumentsNumber();
+    Assert.equal(returnedId, 1, "Document with ID = 1 shoul be added.");
 	}
   function testGetDocById() {
-    var (id, owner, data, fio) = documents.getDocById(1);
-    Assert.equal(id, 1, "Id is expected to be 1.");
-    // Assert.equal(owner, this, "Owner is expected to be this test contract.");
+    var (id, owner, data, fio) = documents.getDocById(0);
+    Assert.equal(id, 0, "Id is expected to be 1.");
+    Assert.equal(owner, this, "Owner is expected to be this test contract.");
   }
 
   function testGetThisAddresDocNumber() {
